@@ -7,5 +7,8 @@
 </head>
 <body>
     welcome to home page
+    {% for u in user %}
+    <p>{{ u.username }} - {{ u.email }} - {{ u.phone_number }} - {{ u.role }}</p>
+    {% endfor %}
 </body>
 </html>
