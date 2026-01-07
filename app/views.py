@@ -32,6 +32,14 @@ def creaetusers(request):
 
 
 
+class Demoapi(APIView):
+    def get(self, request):
+        data = {
+            "message": "Hello, this is a demo API response!"
+        }
+        return Response(data)
+
+
 # create api view for usercustome model
 class UsercustomeAPIView(APIView):
     def get(self, request):
