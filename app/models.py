@@ -6,8 +6,8 @@ from django.contrib.auth.models import AbstractUser
 
 class Usercustome(AbstractUser):
     ROLE_CHOICES = (
-        ('shopkeeper', 'Shopkeeper'),
-        ('customer', 'Customer'),
+        ('shopkeeper', 'shopkeeper'),
+        ('customer', 'customer'),
     )
 
     phone_number = models.CharField(max_length=15,null=True, blank=True)
