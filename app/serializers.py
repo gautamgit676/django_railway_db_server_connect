@@ -1,6 +1,6 @@
 
 from rest_framework import routers, serializers, viewsets
-from app.models import Usercustome
+from app.models import Usercustome,UserProfile
   
     
 
@@ -21,3 +21,9 @@ class UsercustomeSerializer(serializers.ModelSerializer):
             password=validated_data['password'],
         )
         return user
+
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserProfile
+        fields = "__all__"

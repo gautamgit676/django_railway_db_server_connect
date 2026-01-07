@@ -68,3 +68,15 @@ class userlogout(APIView):
         except Exception as e:
             logging.error(f"Logout failed: {e}")
             return Response({'error': 'Logout failed'}, status=500)
+        
+        
+class UserProfile(APIView):
+    def post(self, request):
+        serializer = UserProfileSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=201)
+        return Response(serializer.errors, status=400)
+       
+
+
