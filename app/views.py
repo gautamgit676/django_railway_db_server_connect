@@ -70,7 +70,7 @@ class userlogout(APIView):
             return Response({'error': 'Logout failed'}, status=500)
         
         
-class UserProfile(APIView):
+class Userprofile(APIView):
     
     def get(self, request):
         profiles = UserProfile.objects.all()
