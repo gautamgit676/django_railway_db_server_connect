@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate, login,logout
 import logging
 from .serializers import *
 from rest_framework.permissions import AllowAny
-
+from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
 # Create your views here.
 
@@ -62,23 +62,26 @@ class UsercustomeAPIView(APIView):
     
 
 class Userlogin(APIView):
-    permission_classes = [AllowAny]
-
     def post(self, request):
-        user = authenticate(
-            username=request.data.get('username'),
-            password=request.data.get('password')
-        )
-
-        if not user:
-            return Response({"error": "Invalid credentials"}, status=401)
-
-        refresh = RefreshToken.for_user(user)
-
-        return Response({
-            "refresh": str(refresh),
-            "access": str(refresh.access_token),
-        })            
+        try:
+            username = request.data.get('username')
+            password = request.data.get('password')
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                refresh = RefreshToken.for_user(user)
+                # otp = random.randint(1000, 9999)               
+                # cache.set(user.username, otp, timeout=300) 
+                #Send OTP To User Email    
+                # send_emails.delay(otp, user.username)
+                return Response({'refresh': str(refresh),'access': str(refresh.access_token),
+                    "Usedata": {'username': user.username,}
+                }, status=status.HTTP_200_OK)
+            else:
+                return Response({"error": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+  
     
 class userlogout(APIView):
     def post(self, request):
