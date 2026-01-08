@@ -17,7 +17,7 @@ class UsercustomeSerializer(serializers.ModelSerializer):
         user = Usercustome(
             # id=validated_data['id'],
             username=validated_data['username'],
-            user_role=validated_data['user_role'],
+            role=validated_data['role'],
             phone_number=validated_data['phone_number'],
             email=validated_data['email']
         )
