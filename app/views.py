@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from django.contrib.auth import authenticate, login,logout
 import logging
 from .serializers import *
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny,IsAuthenticated
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
 # Create your views here.
@@ -62,7 +62,14 @@ class UsercustomeAPIView(APIView):
     
     
 
+class CurrentUserAPIView(APIView):
+    permission_classes = [IsAuthenticated]
 
+    def get(self, request):
+        serializer = UsercustomeSerializer(request.user)
+        return Response(serializer.data)
+    
+    
 class Userlogin(APIView):
     permission_classes = [AllowAny]
 
