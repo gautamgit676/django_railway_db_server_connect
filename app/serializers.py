@@ -21,8 +21,10 @@ class UsercustomeSerializer(serializers.ModelSerializer):
             phone_number=validated_data['phone_number'],
             email=validated_data['email']
         )
+        
         user.set_password(validated_data['password'])
         user.save()
+        
         return user 
 
 class UserProfileSerializer(serializers.ModelSerializer):
