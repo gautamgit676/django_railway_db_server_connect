@@ -113,6 +113,15 @@ DATABASES = {
     }
 }
 
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),   # 5 → 15 min
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),      # long life
+
+    'ROTATE_REFRESH_TOKENS': True,
+    'BLACKLIST_AFTER_ROTATION': True,
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
