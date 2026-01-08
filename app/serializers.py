@@ -12,16 +12,18 @@ class UsercustomeSerializer(serializers.ModelSerializer):
             'password': {'write_only': True}
         }
 
+    
     def create(self, validated_data):
-        user = Usercustome.objects.create_user(
+        user = Usercustome(
+            # id=validated_data['id'],
             username=validated_data['username'],
-            email=validated_data['email'],
+            user_role=validated_data['user_role'],
             phone_number=validated_data['phone_number'],
-            role=validated_data['role'],
-            password=validated_data['password'],
+            email=validated_data['email']
         )
-        return user
-
+        user.set_password(validated_data['password'])
+        user.save()
+        return user 
 
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
