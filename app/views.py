@@ -5,7 +5,11 @@ from rest_framework.response import Response
 from django.contrib.auth import authenticate, login,logout
 import logging
 from .serializers import *
+from rest_framework.permissions import AllowAny
+
+from rest_framework_simplejwt.tokens import RefreshToken
 # Create your views here.
+
 
 
 def home(request):
@@ -39,9 +43,10 @@ class Demoapi(APIView):
         }
         return Response(data)
 
-
 # create api view for usercustome model
+
 class UsercustomeAPIView(APIView):
+    
     def get(self, request):
         users = Usercustome.objects.all()
         serializer = UsercustomeSerializer(users, many=True)
@@ -55,18 +60,25 @@ class UsercustomeAPIView(APIView):
         return Response(serializer.errors, status=400)
     
     
+
 class Userlogin(APIView):
+    permission_classes = [AllowAny]
+
     def post(self, request):
-        username = request.data.get('username')
-        password = request.data.get('password')
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            serializer = UsercustomeSerializer(user)
-            return Response(serializer.data)
-        else:
-            return Response({'error': 'Invalid credentials'}, status=400)
-            
+        user = authenticate(
+            username=request.data.get('username'),
+            password=request.data.get('password')
+        )
+
+        if not user:
+            return Response({"error": "Invalid credentials"}, status=401)
+
+        refresh = RefreshToken.for_user(user)
+
+        return Response({
+            "refresh": str(refresh),
+            "access": str(refresh.access_token),
+        })            
     
 class userlogout(APIView):
     def post(self, request):
