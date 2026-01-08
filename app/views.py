@@ -46,6 +46,7 @@ class Demoapi(APIView):
 # create api view for usercustome model
 
 class UsercustomeAPIView(APIView):
+    permission_classes = [AllowAny]
     
     def get(self, request):
         users = Usercustome.objects.all()
