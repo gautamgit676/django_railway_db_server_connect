@@ -9,7 +9,7 @@ from rest_framework.permissions import AllowAny,IsAuthenticated
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
 # Create your views here.
-
+from django.shortcuts import get_object_or_404
 
 
 def home(request):
@@ -128,12 +128,22 @@ class Userprofile(APIView):
         serializer = UserProfileSerializer(profiles, many=True)
         return Response(serializer.data)
     
-    def post(self, request):
-        serializer = UserProfileSerializer(data=request.data)
+  
+class userprfileupdate(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def put(self, request, user_id):
+        profile = get_object_or_404(UserProfile, user_id=user_id)
+
+        serializer = UserProfileSerializer(
+            profile,
+            data=request.data,
+            partial=True  # allows partial update
+        )
+
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=201)
+            return Response(serializer.data, status=200)
+
         return Response(serializer.errors, status=400)
        
-
-
