@@ -119,7 +119,7 @@ class userlogout(APIView):
         
 
 class Userprofile(APIView):
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
     # allowd_methods = ['GET', 'POST']
     
         
