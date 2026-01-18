@@ -112,16 +112,16 @@ DATABASES = {
         'PORT': '14284',
     }
 }
-TEMPLATES = [
-    {
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.request',
-                'app.views.mainpage',
-            ],
-        },
-    },
-]
+# TEMPLATES = [
+#     {
+#         'OPTIONS': {
+#             'context_processors': [
+#                 'django.template.context_processors.request',
+#                 'app.views.mainpage',
+#             ],
+#         },
+#     },
+# ]
 from datetime import timedelta
 
 SIMPLE_JWT = {
