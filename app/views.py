@@ -117,8 +117,12 @@ class userlogout(APIView):
             return Response({'error': 'Logout failed'}, status=500)
         
         
+
 class Userprofile(APIView):
+    permission_classes = [IsAuthenticated]
+    # allowd_methods = ['GET', 'POST']
     
+        
     def get(self, request):
         profiles = UserProfile.objects.all()
         serializer = UserProfileSerializer(profiles, many=True)
