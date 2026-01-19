@@ -132,8 +132,8 @@ class Userprofile(APIView):
 class userprfileupdate(APIView):
     permission_classes = [IsAuthenticated]
     
-    def put(self, request, user_id):
-        profile = get_object_or_404(UserProfile, user_id=user_id)
+    def put(self, request, pk):
+        profile = get_object_or_404(UserProfile, pk=pk)
 
         serializer = UserProfileSerializer(
             profile,
