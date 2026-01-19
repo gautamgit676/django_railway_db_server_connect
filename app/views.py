@@ -133,7 +133,13 @@ class userprfileupdate(APIView):
     permission_classes = [IsAuthenticated]
     
     def put(self, request, pk):
-        profile = get_object_or_404(UserProfile, pk=pk)
+        try:
+            profile = UserProfile.objects.get(pk=pk)
+        except UserProfile.DoesNotExist:
+            return Response(
+                {"error": "Profile not found"},
+                status=status.HTTP_404_NOT_FOUND
+            )
 
         serializer = UserProfileSerializer(
             profile,
@@ -147,3 +153,23 @@ class userprfileupdate(APIView):
 
         return Response(serializer.errors, status=400)
        
+# def put(self, request, pk):
+#         try:
+#             profile = UserProfile.objects.get(pk=pk)
+#         except UserProfile.DoesNotExist:
+#             return Response(
+#                 {"error": "Profile not found"},
+#                 status=status.HTTP_404_NOT_FOUND
+#             )
+
+#         serializer = UserProfileSerializer(
+#             profile,
+#             data=request.data,
+#             partial=True
+#         )
+
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data)
+
+#         return Response(serializer.errors, status=400)
