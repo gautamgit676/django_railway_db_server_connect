@@ -124,7 +124,7 @@ class Userprofile(APIView):
     
         
     def get(self, request):
-        profiles = UserProfile.objects.all()
+        profiles = UserProfile.objects.filter(user = request.user )
         serializer = UserProfileSerializer(profiles, many=True)
         return Response(serializer.data)
     

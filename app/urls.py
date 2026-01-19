@@ -10,6 +10,6 @@ urlpatterns = [
     path("logout/", views.userlogout.as_view(), name="logout"),
     path('userprofiles/', views.Userprofile.as_view(), name='userprofiles'),
     path('userprofiles/<int:pk>/', views.userprfileupdate.as_view(), name='userprofiledetail'),
-    
     path("me/", views.CurrentUserAPIView.as_view(), name="current-user"),
 ]
+
